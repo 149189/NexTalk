@@ -1,0 +1,14 @@
+Django>=4.2
+djangorestframework
+redis
+django-redis
+psycopg2-binary  # replace with sqlite3 default if you prefer
+requests
+python-dotenv
+pytest
+pytest-django
+fakeredis
+sentence-transformers   # optional (embeddings)
+faiss-cpu               # optional (faiss)
+openai                  # optional LLM adapter
+google-generativeai
