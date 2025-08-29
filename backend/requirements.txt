@@ -12,3 +12,4 @@ sentence-transformers   # optional (embeddings)
 faiss-cpu               # optional (faiss)
 openai                  # optional LLM adapter
 google-generativeai
+django-cors-headers

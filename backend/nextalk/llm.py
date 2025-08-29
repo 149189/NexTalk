@@ -118,3 +118,12 @@ def set_gemini_api_key(key: Optional[str]):
     _GEMINI_API_KEY = key
     _client = None
     logger.info("GEMINI_API_KEY updated via set_gemini_api_key(); client will re-init on next call.")
+
+
+def chat_with_llm(message: str) -> str:
+    """
+    Call your LLM API (OpenAI, Gemini, or HuggingFace).
+    For now, return a mock reply.
+    """
+    # Example mock response
+    return f"You said: {message}. (This is a mock LLM response)"
