@@ -6,8 +6,8 @@ on:
   workflow_dispatch:
 
 env:
-  BACKEND_IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/nextalk-backend
-  FRONTEND_IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/nextalk-frontend
+  BACKEND_IMAGE: kaustubh149/nextalk-backend
+  FRONTEND_IMAGE: kaustubh149/nextalk-frontend
 
 jobs:
   build-and-push:
