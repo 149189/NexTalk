@@ -1,0 +1,32 @@
+name: Deploy to server (pull & docker-compose)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-and-push    # optional; if you used separate workflow, remove this
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install SSH client
+        run: sudo apt-get update && sudo apt-get install -y openssh-client
+
+      - name: Setup SSH key
+        uses: webfactory/ssh-agent@v0.8.1
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Pull images & restart stack on server
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+            cd /home/${{ secrets.SSH_USER }}/NexTalk || exit 1
+            docker-compose pull
+            docker-compose up -d --remove-orphans
+            # optionally: docker system prune -f
+            exit
+          EOF
