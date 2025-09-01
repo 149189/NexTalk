@@ -1,24 +1,35 @@
-version: "3.9"
-
 services:
-  web:
-    build: ./backend # path where your Django Dockerfile lives
-    command: python manage.py runserver 0.0.0.0:8000
-    volumes:
-      - ./backend:/app
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend
     ports:
       - "8000:8000"
     env_file:
       - ./backend/.env
     depends_on:
       - redis
+    restart: unless-stopped
 
   redis:
-    image: redis:7
+    image: redis:7-alpine
+    container_name: redis
     ports:
       - "6379:6379"
     volumes:
       - redis_data:/data
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./nextalk_client
+    container_name: frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
 
 volumes:
   redis_data:

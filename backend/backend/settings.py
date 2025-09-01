@@ -111,7 +111,7 @@ REST_FRAMEWORK = {
 }
 
 # Short-term memory config
-SHORT_TERM_MAX_MESSAGES = 20
+SHORT_TERM_MAX_MESSAGES = 10
 
 REDIS_HOST = os.getenv("REDIS_HOST", "redis")
 REDIS_PORT = int(os.getenv("REDIS_PORT", 6379))
