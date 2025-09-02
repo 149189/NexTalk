@@ -1,0 +1,54 @@
+# render.yaml - NexTalk (backend + frontend + managed Redis)
+# Put this at the repo root and push to GitHub.
+# Render will detect and create the services when you create a new Web Service "from render.yaml".
+
+services:
+  - type: web
+    name: nextalk-backend
+    env: docker
+    branch: main
+    rootDir: backend
+    plan: free
+    region: oregon
+    autoDeploy: true
+    # startCommand: use entrypoint inside backend/entrypoint.sh
+    startCommand: ./entrypoint.sh
+    # Optional health check (uncomment if your service exposes /health)
+    # healthCheckPath: /healthz
+    disk: 10
+    envVars:
+      # Render will replace connection info for the managed Redis below;
+      # leave REDIS_URL unset here and set it in the Render dashboard (or use the "fromService" mapping if supported).
+      - key: DJANGO_ENV
+        value: "production"
+      - key: DEBUG
+        value: "0"
+      - key: ALLOWED_HOSTS
+        value: "*"
+      - key: SHORT_TERM_MAX_MESSAGES
+        value: "50"
+      # SECRET_KEY should be set in the Render dashboard (do NOT commit secrets)
+      # - key: SECRET_KEY
+      #   secure: true
+
+  - type: static
+    name: nextalk-frontend
+    env: static
+    branch: main
+    rootDir: nextalk_client
+    plan: free
+    region: oregon
+    buildCommand: npm install && npm run build
+    staticPublishPath: build
+    autoDeploy: true
+    envVars:
+      # Point the frontend to your backend public URL after backend is created.
+      # Update this in Render settings to your backend's external URL (e.g. https://nextalk-backend.onrender.com)
+      - key: REACT_APP_BACKEND_URL
+        value: "https://REPLACE_WITH_BACKEND_URL"
+
+  - type: redis
+    name: nextalk-redis
+    plan: starter
+    region: oregon
+    # Render will produce connection details (host/port/password) after creation.
