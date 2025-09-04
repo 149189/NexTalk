@@ -24,3 +24,10 @@ This is the **first public release (MVP)** of NexTalk – an AI-powered chat app
 
 
 **Full Changelog**: https://github.com/149189/NexTalk/commits/v0.0.1
+
+## How to run
+- Just Install Docker Desktop from: https://www.docker.com/get-started/
+- In the root dir paste this command:
+  ```
+  docker-compose up --build
+  ```
