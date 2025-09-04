@@ -31,3 +31,13 @@ This is the **first public release (MVP)** of NexTalk – an AI-powered chat app
   ```
   docker-compose up --build
   ```
+### Or
+- cd ./backend:
+   ```
+   - python manage.py migrate
+   - python manage.py runserver
+   ```
+- cd ./nextalk_client
+  ```
+  - npm start
+  ```
